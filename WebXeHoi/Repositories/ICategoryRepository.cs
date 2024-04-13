@@ -1,4 +1,5 @@
-﻿using WebXeHoi.Models;
+﻿using System.Collections;
+using WebXeHoi.Models;
 
 namespace WebXeHoi.Repositories
 {

@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using WebXeHoi.Models;
+﻿using WebXeHoi.Models;
 using WebXeHoi.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebXeHoi.Controllers
 {
@@ -22,19 +22,27 @@ namespace WebXeHoi.Controllers
             var products = await _productRepository.GetAllAsync();
             return View(products);
         }
-        
+        // Hiển thị form thêm sản phẩm mới
+        public async Task<IActionResult> Create()
+        {
+            var categories = await _categoryRepository.GetAllAsync();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            return View();
+        }
 
         // Xử lý thêm sản phẩm mới
         [HttpPost]
-        public async Task<IActionResult> Create(Product product, IFormFile ImageUrl)
+        public async Task<IActionResult> Create(Product product, IFormFile imageUrl)
         {
             if (ModelState.IsValid)
             {
-                if (ImageUrl != null)
+                if (imageUrl != null)
                 {
                     // Lưu hình ảnh đại diện tham khảo bài 02 hàm SaveImage
-                    product.ImageUrl = await SaveImage(ImageUrl);
+                    product.ImageUrl = await SaveImage(imageUrl);
                 }
+
+
                 await _productRepository.AddAsync(product);
                 return RedirectToAction(nameof(Index));
             }
@@ -42,7 +50,9 @@ namespace WebXeHoi.Controllers
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View(product);
+
         }
+
 
         // Hiển thị thông tin chi tiết sản phẩm
         public async Task<IActionResult> Details(int id)

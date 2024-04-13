@@ -1,18 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebXeHoi.Models;
 using WebXeHoi.Repositories;
 
 namespace WebXeHoi.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
-    public class ProductManager : Controller
+    public class ProductManagerController : Controller
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public ProductManager(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        public ProductManagerController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
@@ -25,12 +26,20 @@ namespace WebXeHoi.Areas.Admin.Controllers
             return View(products);
         }
 
-        // Hiển thị form thêm sản phẩm mới
         public async Task<IActionResult> Create()
         {
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View();
         }
+        private async Task<string> SaveImage(IFormFile ImageUrl)
+        {
+            var savePath = Path.Combine("wwwroot/images", ImageUrl.FileName); // Thay đổi đường dẫn theo cấu hình của bạn
+            using (var fileStream = new FileStream(savePath, FileMode.Create))
+            {
+                await ImageUrl.CopyToAsync(fileStream);
+            }
+            return "/images/" + ImageUrl.FileName; // Trả về đường dẫn tương đối
+        }
     }
-    }
+}
