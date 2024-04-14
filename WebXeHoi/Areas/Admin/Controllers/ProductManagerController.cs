@@ -27,9 +27,8 @@ namespace WebXeHoi.Areas.Admin.Controllers
         }
 
         // Hiển thị form thêm sản phẩm mới
-        public async Task<IActionResult> Create ()
+        public async Task<IActionResult> Create()
         {
-
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View();
@@ -43,13 +42,13 @@ namespace WebXeHoi.Areas.Admin.Controllers
             {
                 if (imageUrl != null)
                 {
-                    // Lưu hình ảnh đại diện tham khảo bài 02 hàm SaveImage
+                    // Lưu hình ảnh đại diện tham khảo bài 02 hàm SaveImage 
                     product.ImageUrl = await SaveImage(imageUrl);
                 }
                 await _productRepository.AddAsync(product);
                 return RedirectToAction(nameof(Index));
             }
-            // Nếu ModelState không hợp lệ, hiển thị form với dữ liệu đã nhập
+            // Nếu ModelState không hợp lệ, hiển thị form với dữ liệu đã nhập 
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View(product);

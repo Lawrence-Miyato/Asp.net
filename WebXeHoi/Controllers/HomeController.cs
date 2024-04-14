@@ -1,21 +1,25 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebXeHoi.Models;
+using WebXeHoi.Repositories;
 
 namespace WebXeHoi.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductRepository _productReposity;
+
+        public HomeController(IProductRepository productRepository)
         {
-            _logger = logger;
+            _productReposity = productRepository;
         }
 
-        public IActionResult Index()
+        //Hiển thị danh sách sản phẩm
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var product = await _productReposity.GetAllAsync();
+            return View(product);
         }
 
         public IActionResult Privacy()

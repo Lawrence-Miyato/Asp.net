@@ -50,9 +50,12 @@
                     @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <form asp-controller="ShoppingCart" asp-action="AddtoCart" method="post">
+                    <input type="hidden" name="productId" value="@item.Id"/>
+                    <label for="quantity">Số lượng:</label>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1"/>
+                    <button class="btn btn-info" type="submit">Thêm Vào Giỏ Hàng</button>
+                </form>
             </td>
         </tr>
 }
