@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<WebXeHoi.Models.Product>
-
+@using Microsoft.AspNetCore.Mvc.Rendering
 @{
     ViewData["Title"] = "Index";
 }
@@ -46,7 +46,10 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <img src="@item.ImageUrl" alt="Product Image" style="max-width: 150px; max-height: 150px" />
+                    @if (item.ImageUrl != null)
+                    {
+                       <img src="@item.ImageUrl" alt="Product Image" style="width: 300px;height: auto;" />   
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Category)

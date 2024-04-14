@@ -1,19 +1,18 @@
 ﻿@model WebXeHoi.Models.Product
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
+<h1>Edit</h1>
+
 <h4>Product</h4>
-
-<a asp-area="Admin" asp-controller="ProductManager" asp-action="Create">Thêm Sản Phẩm</a>
-
-
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="All" class="text-danger"></div>
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -38,7 +37,7 @@
                 <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"></select>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Create</button>
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
